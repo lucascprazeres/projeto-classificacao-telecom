@@ -13,15 +13,15 @@ def setup_channel(channel_type, symbs, code_rate, Es, SNR_dB):
         raise ValueError(f'Channel type {channel_type} not found')
     return channel_output
 
-def generate_dataset(channel_output, indices):
+def generate_dataset(channel_output, indexes):
   # Train
-  train_size = int(0.8*len(indices))
-  y_train = indices[:train_size]
+  train_size = int(len(indexes)-3000)
+  y_train = indexes[:train_size]
   X_train = np.stack([np.real(channel_output[:train_size]),
                       np.imag(channel_output[:train_size])], axis=1)
 
   # Test
-  y_test = indices[train_size:]
+  y_test = indexes[train_size:]
   X_test = np.stack([np.real(channel_output[train_size:]),
                     np.imag(channel_output[train_size:])], axis=1)
   return [X_train, X_test, y_train, y_test]
