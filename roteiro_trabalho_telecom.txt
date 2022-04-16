@@ -1,0 +1,28 @@
+Este trabalho é em equipe, a qual precisa estar listada em
+https://docs.google.com/document/d/1JnagvKQ5W0bEbX_vVrVTuXmoGBCkv_CaebTZK2z3mPQ/edit#heading=h.idi8v974v4jn
+para que os participantes tenham direito a nota.
+
+Essa atividade é uma competição entre as equipes. A base são os códigos em qam_classifiers.ipynb e qam_awgn.ipynb disponíveis em https://github.com/lasseufpa/ml4comm, e discutidos no vídeo da pasta videolectures\trabalho_classificacao_telecom no nextcloud.
+A ideia é:
+- temos dois problemas, ou dois datasets: um correspondente ao canal AWGN e outro ao canal "doidão".
+- temos vários classificadores já treinados e testados para estes dois problemas (vide slides e códigos). Mas notem que não houve preocupação com o número de exemplos usados para o treino. Vide em https://github.com/lasseufpa/ml4comm/blob/main/qam_classifiers.ipynb
+que a linha:
+        num_symbols  = 6000    # Number of transmitted symbols
+especifica a geração (aleatória) de 6000 exemplos ("símbolos"), que depois de serem transmitidos pelo canal (por exemplo, a atmosfera), são armazenados na variável "channel_output". E na linha:
+       train_size = int(0.5*len(indices))
+divide-se esse conjunto de 6000 exemplos de forma que metade desses exemplos componha o conjunto de treino e a outra metade o conjunto de teste. O código qam_awgn.ipynb segue raciocínio semelhante ao desse código qam_classifiers.ipynb.
+Um objetivo deste trabalho é então:
+1) Eventualmente avaliar vários e daí escolher um classificador (árvore de decisão, KNN, etc.). Não precisam estar limitados ao já implementados, e podem usar outros classificadores, não exemplificados no código. Dica: iniciem pelos do código, para avançarem mais rápido e se houver tempo, refinem com outros classificadores.
+2) Buscar o menor número N de exemplos que precisam ser usados para treino desse classificador de forma que o desempenho não seja pior do que:
+     2.a) taxa de erro (SER) seja menor ou igual a 3% para o canal AWGN  
+     2.b) taxa de erro (SER) seja menor ou igual a 2% para o canal "doidão"
+Esse tipo de estudo é relacionado ao "sample complexity" (https://en.wikipedia.org/wiki/Sample_complexity), abordado em sala de aula.
+Espera-se ao fim deste estudo, que a equipe indique o classificador escolhido, e faça upload de um script chamado meu_classificador_awgn.py ou meu_classificador_awgn.ipynb que treine o dado classificador com N exemplos de treino e o teste com 3000 exemplos de teste, usando o canal AWGN. E repita a tarefa gerando o meu_classificador_crazy.py ou meu_classificador_crazy.ipynb para o canal doidão (ou seja, treine outro classificador, eventualmente com outro valor de N, e teste com 3000 exemplos obtidos via canal doidão). Ambos arquivos de código (para AWGN e doidão) devem ser colocados em um único zip, que é então "uploaded" no SIGAA no prazo.
+
+O outro objetivo do trabalho é fazer a otimização dos hiperparâmetros do classificador para que o custo computacional de etapa de teste do modelo (a etapa de treino não é importante aqui), medido em termos de número de operações matemáticas e necessidade de armazenamento em memória RAM do modelo seja minimizado. Ou seja, aqui não se quer um classificador "pesado" e grande, exigindo muitas contas. Mas sim um simples e "rápido" na etapa de teste. Uma análise rigorosa de custo computacional é tipicamente feita contando-se número de multiplicações, adições, etc, e daí usando-se a notação Big O (https://en.wikipedia.org/wiki/Big_O_notation). Caso a equipe não consiga fazer uma análise formal do custo computacional, deve ao menos dar um indicativo qualitativo ou baseado no tempo comparativo para a etapa de teste em uma dada máquina (classificar todo conjunto de teste e contabilizar o tempo para isso, comparando com outros classificadores).
+
+Espera-se ao fim desta investigação, que a equipe apresente um classificador que exija um (relativo) pequeno número de exemplos para treino, mas que atinja o critério de taxa de erro máxima, ao mesmo tempo que tenha baixo custo computacional.
+
+Um pequeno relatório de 1 página no máximo deve ser feito, indicando nome da equipe, participantes, os resultados e escolhas feitas, e colocado no zip a ser "uploaded". Formatos para esse arquivo do relatório são: PDF, DOCX e TXT. Não usem outros formatos. O zip terá assim 3 arquivos, 2 de código e o breve relatório.
+
+No dia da apresentação, cada equipe defende sua tese em prol de seus classificadores (são 2 classificadores: para AWGN e doidão) e, debatemos quem vence cada categoria e fica com a melhor nota.
